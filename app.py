@@ -60,6 +60,28 @@ class BirdsByID(Resource):
         )
         
         return response
+    
+    def patch(self,id):
+        bird = Bird.query.filter_by(id=id).first()
+        
+        if not bird:
+            return jsonify({"error":"Bird not found"}), 404
+        
+        try:
+            data = request.get_json()
+            for attr,value in data.items():
+                setattr(bird, attr, value)
+                
+            db.session.commit()
+            
+            response = make_response(
+                jsonify({"message":"Patch succesful", "bird":bird.to_dict()}),
+                200
+            )
+            
+            return response
+        except Exception as e:
+            return jsonify({"error":str(e)})
 
 api.add_resource(BirdsByID, '/birds/<int:id>')
 
