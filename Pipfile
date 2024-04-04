@@ -13,6 +13,7 @@ sqlalchemy-serializer = "*"
 flask-restful = "*"
 
 [dev-packages]
+python = "*"
 
 [requires]
 python_version = "3.10"
